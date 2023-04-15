@@ -1,0 +1,82 @@
+.mobile-menu-card {
+  width: 100%;
+  background: #161625;
+  margin: 0px 0px 0px 0px;
+  padding: 15px 18px 15px 18px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.apply-class {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Roboto';
+  margin: 0px 20px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  cursor: pointer;
+  outline: none;
+}
+
+.remove-class {
+  color: #94a3b8 !important;
+  text-decoration: none !important;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'Roboto';
+  margin: 0px 20px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  cursor: pointer;
+  outline: none;
+}
+
+@media screen and (min-width: 576px) {
+  .apply-class {
+    font-size: 16px;
+  }
+  .remove-class {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .apply-class {
+    font-size: 18px;
+  }
+  .remove-class {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .apply-class {
+    font-size: 18px;
+    margin: 0px 22px 0px 0px;
+  }
+  .remove-class {
+    font-size: 18px;
+    margin: 0px 22px 0px 0px;
+  }
+}
+
+.navbar-close-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.navbar-close-icon {
+  height: 20px;
+  width: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .navbar-close-icon {
+    height: 22px;
+    width: 22px;
+  }
+}

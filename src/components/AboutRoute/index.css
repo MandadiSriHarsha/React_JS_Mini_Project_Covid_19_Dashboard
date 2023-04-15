@@ -1,0 +1,146 @@
+.about-page-bg-container {
+  height: 100vh;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 0px 20px 0px;
+  align-items: flex-start;
+  background-color: #161625;
+}
+
+.about-page-content-card {
+  width: 90%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.about-page-heading-1 {
+  font-family: 'Roboto';
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 500;
+  margin: 0px 0px 0px 0px;
+  padding: 30px 0px 10px 0px;
+}
+
+@media screen and (min-width: 768px) {
+  .about-page-heading-1 {
+    font-size: 35px;
+  }
+}
+
+.about-page-description-1 {
+  color: #94a3b8;
+  font-family: 'Roboto';
+  font-size: 12px;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 20px 0px;
+}
+
+@media screen and (min-width: 768px) {
+  .about-page-description-1 {
+    font-size: 14px;
+  }
+}
+
+.about-page-heading-2 {
+  color: #e2e8f0;
+  font-family: 'Roboto';
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 35px 0px;
+}
+
+@media screen and (min-width: 768px) {
+  .about-page-heading-2 {
+    font-size: 18px;
+  }
+}
+
+.faqs-list {
+  width: 100%;
+  list-style-type: none;
+  padding: 0px 0px 0px 0px;
+}
+
+.faq-item {
+  list-style-type: none;
+  padding: 0px 0px 0px 0px;
+  font-family: 'Roboto';
+}
+
+.faq-question {
+  color: #94a3b8;
+  font-size: 13px;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 8px 0px;
+  font-weight: 400;
+  text-align: left;
+}
+
+@media screen and (min-width: 768px) {
+  .faq-question {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .faq-question {
+    font-size: 16px;
+  }
+}
+
+.faq-answer {
+  color: #007bff;
+  font-size: 13px;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 30px 0px;
+  font-weight: 400;
+  word-wrap: break-word;
+  line-height: 1.8;
+  text-align: left;
+}
+
+@media screen and (min-width: 768px) {
+  .faq-answer {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .faq-answer {
+    font-size: 16px;
+  }
+}
+
+.about-page-failure-card {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 0px 20px 0px;
+  background-color: #161625;
+}
+
+.about-page-failure-button {
+  border: none;
+  border-radius: 4px;
+  font-family: 'Roboto';
+  color: #ffffff;
+  font-size: 16px;
+  background-color: #3473fa;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  padding: 9px 15px 9px 15px;
+}
+
+@media screen and (min-width: 992px) {
+  .about-page-failure-button {
+    font-size: 20px;
+  }
+}
