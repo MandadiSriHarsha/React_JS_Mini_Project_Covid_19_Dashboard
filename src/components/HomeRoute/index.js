@@ -1,8 +1,11 @@
 import {Component} from 'react'
 
+import {BsSearch, BsSortDownAlt, BsSortUp} from 'react-icons/bs'
+
 import LoaderCard from '../LoaderCard'
 import Header from '../HeaderComponent/Header'
 import Footer from '../Footer'
+import StatsCard from '../StatsCard'
 
 import './index.css'
 
@@ -160,7 +163,12 @@ const homePageConstants = {
 }
 
 class HomeRoute extends Component {
-  state = {homePageStatus: homePageConstants.isLoading, homePageList: []}
+  state = {
+    homePageStatus: homePageConstants.isLoading,
+    homePageList: [],
+    searchValue: '',
+    defaultSortValue: 'ASC',
+  }
 
   componentDidMount() {
     this.getHomePageDetails()
@@ -172,19 +180,133 @@ class HomeRoute extends Component {
     const options = {method: 'GET'}
     const response = await fetch(apiUrl, options)
     const data = await response.json()
-    console.log(data)
+    const updatedList = statesList.map(eachitem => {
+      const object = {}
+      object[eachitem.state_code] = data[eachitem.state_code].total
+      object.population = data[eachitem.state_code].meta.population
+      const resultObject = {}
+      resultObject[eachitem.state_code] = {
+        ...object[eachitem.state_code],
+        population: object.population,
+        stateName: eachitem.state_name,
+      }
+      return resultObject
+    })
     if (response.ok === true) {
       this.setState({
         homePageStatus: homePageConstants.isSuccess,
-        homePageList: data,
+        homePageList: updatedList,
       })
     } else {
       this.setState({homePageStatus: homePageConstants.isFailure})
     }
   }
 
+  onChangeSearchValue = event => {
+    this.setState({searchValue: event.target.value})
+  }
+
+  onChangeSortValue = () => {
+    const {defaultSortValue} = this.state
+    if (defaultSortValue === 'ASC') {
+      this.setState({defaultSortValue: 'DESC'})
+    } else {
+      this.setState({defaultSortValue: 'ASC'})
+    }
+  }
+
   renderSuccessPage = () => {
-    const {homePageList} = this.state
+    const {homePageList, searchValue, defaultSortValue} = this.state
+    let sortedList = null
+    if (defaultSortValue === 'ASC') {
+      const referenceList = statesList.sort((a, b) => {
+        if (b.state_code.toUpperCase() > a.state_code.toUpperCase()) {
+          return 1
+        }
+        return -1
+      })
+    } else {
+      sortedList = statesList.sort((a, b) => {
+        if (b.state_code.toUpperCase() < a.state_code.toUpperCase()) {
+          return 1
+        }
+        return -1
+      })
+    }
+    return (
+      <div className="home-page-content-card">
+        <div className="search-input-container">
+          <button type="button" className="search-button">
+            <BsSearch className="search-icon" />
+          </button>
+          <input
+            type="search"
+            value={searchValue}
+            className="search-input"
+            placeholder="Enter the State"
+            onChange={this.onChangeSearchValue}
+          />
+        </div>
+        <StatsCard homePageList={homePageList} />
+        <div className="home-page-table-content-card">
+          <div className="home-page-table">
+            <div className="home-page-table-heading-card">
+              <div className="sort-card">
+                <p className="sort-heading">States/UT</p>
+                <button
+                  className="sort-button"
+                  type="button"
+                  onClick={this.onChangeSortValue}
+                >
+                  <BsSortDownAlt />
+                </button>
+                <button
+                  className="sort-button"
+                  type="button"
+                  onClick={this.onChangeSortValue}
+                >
+                  <BsSortUp />
+                </button>
+              </div>
+              <p className="header-heading">Confirmed</p>
+              <p className="header-heading">Active</p>
+              <p className="header-heading">Recovered</p>
+              <p className="header-heading">Deceased</p>
+              <p className="header-heading">Population</p>
+            </div>
+            <ul className="home-page-list-bg-container">
+              {sortedList.map(eachitem => {
+                const key = Object.keys(eachitem)
+                return (
+                  <li className="list-item" key={key[0]}>
+                    <p className="list-item-state-name">
+                      {eachitem[key[0]].stateName}
+                    </p>
+                    <p className="list-item-confirmed-text">
+                      {eachitem[key[0]].confirmed}
+                    </p>
+                    <p className="list-item-active-text">
+                      {eachitem[key[0]].confirmed -
+                        (eachitem[key[0]].recovered +
+                          eachitem[key[0]].deceased)}
+                    </p>
+                    <p className="list-item-recovered-text">
+                      {eachitem[key[0]].recovered}
+                    </p>
+                    <p className="list-item-deceased-text">
+                      {eachitem[key[0]].deceased}
+                    </p>
+                    <p className="list-item-population-text">
+                      {eachitem[key[0]].population}
+                    </p>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   renderFailurePage = () => (
