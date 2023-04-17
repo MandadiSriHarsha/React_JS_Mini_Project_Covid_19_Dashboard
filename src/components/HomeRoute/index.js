@@ -1,6 +1,15 @@
 import {Component} from 'react'
 
-import {BsSearch, BsSortDownAlt, BsSortUp} from 'react-icons/bs'
+import {Link} from 'react-router-dom'
+
+import {v4 as uuidv4} from 'uuid'
+
+import {
+  BsSearch,
+  BsSortDownAlt,
+  BsSortUp,
+  BsArrowRightSquare,
+} from 'react-icons/bs'
 
 import LoaderCard from '../LoaderCard'
 import Header from '../HeaderComponent/Header'
@@ -217,21 +226,38 @@ class HomeRoute extends Component {
 
   renderSuccessPage = () => {
     const {homePageList, searchValue, defaultSortValue} = this.state
+    const searchList = statesList.filter(
+      eachitem =>
+        eachitem.state_name.toLowerCase().includes(searchValue.toLowerCase()) ||
+        eachitem.state_code.toLowerCase().includes(searchValue.toLowerCase()),
+    )
     let sortedList = null
     if (defaultSortValue === 'ASC') {
-      const referenceList = statesList.sort((a, b) => {
-        if (b.state_code.toUpperCase() > a.state_code.toUpperCase()) {
+      const referenceList = homePageList.sort((a, b) => {
+        const aKey = Object.keys(a)
+        const bKey = Object.keys(b)
+        if (
+          a[aKey[0]].stateName.toUpperCase() >
+          b[bKey[0]].stateName.toUpperCase()
+        ) {
           return 1
         }
         return -1
       })
+      sortedList = referenceList
     } else {
-      sortedList = statesList.sort((a, b) => {
-        if (b.state_code.toUpperCase() < a.state_code.toUpperCase()) {
+      const referenceList = homePageList.sort((a, b) => {
+        const aKey = Object.keys(a)
+        const bKey = Object.keys(b)
+        if (
+          b[bKey[0]].stateName.toUpperCase() >
+          a[aKey[0]].stateName.toUpperCase()
+        ) {
           return 1
         }
         return -1
       })
+      sortedList = referenceList
     }
     return (
       <div className="home-page-content-card">
@@ -247,64 +273,88 @@ class HomeRoute extends Component {
             onChange={this.onChangeSearchValue}
           />
         </div>
-        <StatsCard homePageList={homePageList} />
-        <div className="home-page-table-content-card">
-          <div className="home-page-table">
-            <div className="home-page-table-heading-card">
-              <div className="sort-card">
-                <p className="sort-heading">States/UT</p>
-                <button
-                  className="sort-button"
-                  type="button"
-                  onClick={this.onChangeSortValue}
-                >
-                  <BsSortDownAlt />
-                </button>
-                <button
-                  className="sort-button"
-                  type="button"
-                  onClick={this.onChangeSortValue}
-                >
-                  <BsSortUp />
-                </button>
+        {searchValue === '' ? (
+          <>
+            <StatsCard homePageList={homePageList} />
+            <div className="home-page-table-content-card">
+              <div className="home-page-table">
+                <div className="home-page-table-heading-card">
+                  <div className="sort-card">
+                    <p className="sort-heading">States/UT</p>
+                    <button
+                      className="sort-button"
+                      type="button"
+                      onClick={this.onChangeSortValue}
+                    >
+                      <BsSortDownAlt />
+                    </button>
+                    <button
+                      className="sort-button"
+                      type="button"
+                      onClick={this.onChangeSortValue}
+                    >
+                      <BsSortUp />
+                    </button>
+                  </div>
+                  <p className="header-heading">Confirmed</p>
+                  <p className="header-heading">Active</p>
+                  <p className="header-heading">Recovered</p>
+                  <p className="header-heading">Deceased</p>
+                  <p className="header-heading">Population</p>
+                </div>
+                <ul className="home-page-list-bg-container">
+                  {sortedList.map(eachitem => {
+                    const key = Object.keys(eachitem)
+                    return (
+                      <li className="list-item" key={uuidv4()}>
+                        <p className="list-item-state-name">
+                          {eachitem[key[0]].stateName}
+                        </p>
+                        <p className="list-item-confirmed-text">
+                          {eachitem[key[0]].confirmed}
+                        </p>
+                        <p className="list-item-active-text">
+                          {eachitem[key[0]].confirmed -
+                            (eachitem[key[0]].recovered +
+                              eachitem[key[0]].deceased)}
+                        </p>
+                        <p className="list-item-recovered-text">
+                          {eachitem[key[0]].recovered}
+                        </p>
+                        <p className="list-item-deceased-text">
+                          {eachitem[key[0]].deceased}
+                        </p>
+                        <p className="list-item-population-text">
+                          {eachitem[key[0]].population}
+                        </p>
+                      </li>
+                    )
+                  })}
+                </ul>
               </div>
-              <p className="header-heading">Confirmed</p>
-              <p className="header-heading">Active</p>
-              <p className="header-heading">Recovered</p>
-              <p className="header-heading">Deceased</p>
-              <p className="header-heading">Population</p>
             </div>
-            <ul className="home-page-list-bg-container">
-              {sortedList.map(eachitem => {
-                const key = Object.keys(eachitem)
-                return (
-                  <li className="list-item" key={key[0]}>
-                    <p className="list-item-state-name">
-                      {eachitem[key[0]].stateName}
+          </>
+        ) : (
+          <ul className="search-results-list-bg-container">
+            {searchList.map(eachitem => (
+              <Link
+                to={`/state/${eachitem.state_code}`}
+                className="search-link-item"
+                key={uuidv4()}
+              >
+                <li className="search-item">
+                  <p className="search-item-heading">{eachitem.state_name}</p>
+                  <div className="search-item-box">
+                    <p className="search-item-box-text">
+                      {eachitem.state_code}
                     </p>
-                    <p className="list-item-confirmed-text">
-                      {eachitem[key[0]].confirmed}
-                    </p>
-                    <p className="list-item-active-text">
-                      {eachitem[key[0]].confirmed -
-                        (eachitem[key[0]].recovered +
-                          eachitem[key[0]].deceased)}
-                    </p>
-                    <p className="list-item-recovered-text">
-                      {eachitem[key[0]].recovered}
-                    </p>
-                    <p className="list-item-deceased-text">
-                      {eachitem[key[0]].deceased}
-                    </p>
-                    <p className="list-item-population-text">
-                      {eachitem[key[0]].population}
-                    </p>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        </div>
+                    <BsArrowRightSquare className="search-item-box-icon" />
+                  </div>
+                </li>
+              </Link>
+            ))}
+          </ul>
+        )}
       </div>
     )
   }
