@@ -23,6 +23,14 @@ const MobileMenuCard = props => {
           Home
         </Link>
         <Link
+          to="/vaccination"
+          className={
+            location === '/vaccination' ? 'apply-class' : 'remove-class'
+          }
+        >
+          Vaccination
+        </Link>
+        <Link
           to="/about"
           className={location === '/about' ? 'apply-class' : 'remove-class'}
         >

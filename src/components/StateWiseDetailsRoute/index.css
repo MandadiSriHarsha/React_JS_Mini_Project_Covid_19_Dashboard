@@ -49,7 +49,8 @@
 }
 
 .success-page-header-card {
-  width: 100%;
+  width: 95%;
+  max-width: 1200px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -181,7 +182,8 @@
 }
 
 .success-page-stats-card {
-  width: 100%;
+  width: 95%;
+  max-width: 1200px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -427,8 +429,8 @@
 }
 
 .districts-stats-card {
-  width: 90%;
-  max-width: 1100px;
+  width: 95%;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -469,7 +471,7 @@
   align-items: center;
   font-family: 'Roboto';
   color: #94a3b8;
-  width: 40%;
+  width: 50%;
   max-width: 200px;
   padding: 0px 0px 0px 0px;
   margin: 15px 40px 15px 0px;
@@ -503,6 +505,7 @@
   font-size: 12px;
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
+  line-height: 1.5;
 }
 
 @media screen and (min-width: 576px) {
@@ -526,5 +529,30 @@
 @media screen and (min-width: 992px) {
   .districts-stats-card-description {
     font-size: 16px;
+  }
+}
+
+.bar-container {
+  width: 95%;
+  max-width: 1200px;
+  overflow-x: auto;
+}
+
+.bar {
+  margin: auto !important;
+  font-size: 12px !important;
+  font-family: 'Roboto' !important;
+  font-weight: lighter !important;
+}
+
+@media screen and (min-width: 576px) {
+  .bar {
+    font-size: 14px !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .bar {
+    font-size: 16px !important;
   }
 }

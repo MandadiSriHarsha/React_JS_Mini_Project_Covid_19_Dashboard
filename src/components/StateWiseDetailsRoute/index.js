@@ -1,5 +1,15 @@
 import {Component} from 'react'
 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  LabelList,
+} from 'recharts'
+
 import {v4 as uuidv4} from 'uuid'
 
 import Header from '../HeaderComponent/Header'
@@ -7,6 +17,21 @@ import Footer from '../Footer'
 import LoaderCard from '../LoaderCard'
 
 import './index.css'
+
+const months = [
+  ' JAN',
+  ' FEB',
+  ' MAR',
+  ' APR',
+  ' MAY',
+  ' JUN',
+  ' JUL',
+  ' AUG',
+  ' SEP',
+  ' OCT',
+  ' NOV',
+  ' DEC',
+]
 
 const statesList = [
   {
@@ -165,6 +190,7 @@ class StateWiseDetailsRoute extends Component {
   state = {
     pageStatus: 'INITIAL',
     defaultSelectedStat: 'confirmed',
+    receivedStateData: {},
     stateName: '',
     testedCount: 0,
     statsList: [],
@@ -172,6 +198,10 @@ class StateWiseDetailsRoute extends Component {
     activeCasesDistrictsList: [],
     recoveredCasesDistrictList: [],
     deceasedCasesDistrictsList: [],
+    confirmedCasesDateList: [],
+    activeCasesDateList: [],
+    recoveredCasesDateList: [],
+    deceasedCasesDateList: [],
   }
 
   componentDidMount() {
@@ -182,7 +212,15 @@ class StateWiseDetailsRoute extends Component {
     const keys = Object.keys(list)
     const outputList = keys.map(eachitem => {
       const object = {}
-      object[eachitem] = list[eachitem].total.confirmed
+      let value = null
+      if (list[eachitem].total.confirmed <= 0) {
+        value = 0
+      } else if (list[eachitem].total.confirmed > 0) {
+        value = list[eachitem].total.confirmed
+      } else {
+        value = 0
+      }
+      object[eachitem] = value
       return object
     })
     return outputList
@@ -192,9 +230,25 @@ class StateWiseDetailsRoute extends Component {
     const keys = Object.keys(list)
     const outputList = keys.map(eachitem => {
       const object = {}
-      object[eachitem] =
+      let value = null
+      if (
         list[eachitem].total.confirmed -
-        (list[eachitem].total.recovered + list[eachitem].total.deceased)
+          (list[eachitem].total.recovered + list[eachitem].total.deceased) <=
+        0
+      ) {
+        value = 0
+      } else if (
+        list[eachitem].total.confirmed -
+          (list[eachitem].total.recovered + list[eachitem].total.deceased) >
+        0
+      ) {
+        value =
+          list[eachitem].total.confirmed -
+          (list[eachitem].total.recovered + list[eachitem].total.deceased)
+      } else {
+        value = 0
+      }
+      object[eachitem] = value
       return object
     })
     return outputList
@@ -204,7 +258,15 @@ class StateWiseDetailsRoute extends Component {
     const keys = Object.keys(list)
     const outputList = keys.map(eachitem => {
       const object = {}
-      object[eachitem] = list[eachitem].total.recovered
+      let value = null
+      if (list[eachitem].total.recovered <= 0) {
+        value = 0
+      } else if (list[eachitem].total.recovered > 0) {
+        value = list[eachitem].total.recovered
+      } else {
+        value = 0
+      }
+      object[eachitem] = value
       return object
     })
     return outputList
@@ -214,11 +276,123 @@ class StateWiseDetailsRoute extends Component {
     const keys = Object.keys(list)
     const outputList = keys.map(eachitem => {
       const object = {}
-      object[eachitem] = list[eachitem].total.deceased
+      let value = null
+      if (list[eachitem].total.deceased <= 0) {
+        value = 0
+      } else if (list[eachitem].total.deceased > 0) {
+        value = list[eachitem].total.deceased
+      } else {
+        value = 0
+      }
+      object[eachitem] = value
       return object
     })
     return outputList
   }
+
+  getConfirmedDatesList = list => {
+    const keys = Object.keys(list)
+    const datesList = keys.map(eachitem => {
+      const date = new Date(eachitem)
+      const month = date.getMonth()
+      const day = date.getDate()
+      const fullDate = day + months[month]
+      const object = {
+        cases_count: list[eachitem].total.confirmed,
+        date: fullDate,
+      }
+      return object
+    })
+    const sortedDatesList = datesList.sort((a, b) => {
+      const aDate = new Date(a.date)
+      const bDate = new Date(b.date)
+      if (bDate > aDate) {
+        return 1
+      }
+      return -1
+    })
+    const slicedArray = sortedDatesList.slice(0, 10)
+    return slicedArray
+  }
+
+  getActiveDatesList = list => {
+    const keys = Object.keys(list)
+    const datesList = keys.map(eachitem => {
+      const date = new Date(eachitem)
+      const month = date.getMonth()
+      const day = date.getDate()
+      const fullDate = day + months[month]
+      const object = {
+        cases_count:
+          list[eachitem].total.confirmed -
+          (list[eachitem].total.recovered + list[eachitem].total.deceased),
+        date: fullDate,
+      }
+      return object
+    })
+    const sortedDatesList = datesList.sort((a, b) => {
+      const aDate = new Date(a.date)
+      const bDate = new Date(b.date)
+      if (bDate > aDate) {
+        return 1
+      }
+      return -1
+    })
+    const slicedArray = sortedDatesList.slice(0, 10)
+    return slicedArray
+  }
+
+  getRecoveredDatesList = list => {
+    const keys = Object.keys(list)
+    const datesList = keys.map(eachitem => {
+      const date = new Date(eachitem)
+      const month = date.getMonth()
+      const day = date.getDate()
+      const fullDate = day + months[month]
+      const object = {
+        cases_count: list[eachitem].total.recovered,
+        date: fullDate,
+      }
+      return object
+    })
+    const sortedDatesList = datesList.sort((a, b) => {
+      const aDate = new Date(a.date)
+      const bDate = new Date(b.date)
+      if (bDate > aDate) {
+        return 1
+      }
+      return -1
+    })
+    const slicedArray = sortedDatesList.slice(0, 10)
+    return slicedArray
+  }
+
+  getDeceasedDatesList = list => {
+    const keys = Object.keys(list)
+    const datesList = keys.map(eachitem => {
+      const date = new Date(eachitem)
+      const month = date.getMonth()
+      const day = date.getDate()
+      const fullDate = day + months[month]
+      const object = {
+        cases_count: list[eachitem].total.deceased,
+        date: fullDate,
+      }
+      return object
+    })
+    const sortedDatesList = datesList.sort((a, b) => {
+      const aDate = new Date(a.date)
+      const bDate = new Date(b.date)
+      if (bDate > aDate) {
+        return 1
+      }
+      return -1
+    })
+    const slicedArray = sortedDatesList.slice(0, 10)
+    return slicedArray
+  }
+
+  formatValue = value => value.toString()
 
   getStateWiseData = async () => {
     this.setState({pageStatus: stateRouteApiConstants.isLoading})
@@ -234,8 +408,11 @@ class StateWiseDetailsRoute extends Component {
     const stateTimeLineResponse = await fetch(timeLineApiUrl, options)
     const stateData = await stateDataResponse.json()
     const stateTimeLineData = await stateTimeLineResponse.json()
-    console.log(stateData[id])
-    console.log(stateTimeLineData)
+    const datesList = stateTimeLineData[id].dates
+    const confirmedDatesList = this.getConfirmedDatesList(datesList)
+    const activeDatesList = this.getActiveDatesList(datesList)
+    const recoveredDatesList = this.getRecoveredDatesList(datesList)
+    const deceasedDatesList = this.getDeceasedDatesList(datesList)
     const totalTestedCount = stateData[id].total.tested
     const pageStatsList = {
       confirmed: stateData[id].total.confirmed,
@@ -251,25 +428,62 @@ class StateWiseDetailsRoute extends Component {
     const confirmedDistrictsList = this.getConfirmedDistrictsList(
       stateData[id].districts,
     )
+    const sortedConfirmedDistrictsList = confirmedDistrictsList.sort((a, b) => {
+      const aKey = Object.keys(a)
+      const bKey = Object.keys(b)
+      if (b[bKey[0]] > a[aKey[0]]) {
+        return 1
+      }
+      return -1
+    })
     const activeDistrictsList = this.getActiveDistrictsList(
       stateData[id].districts,
     )
+    const sortedActiveDistrictsList = activeDistrictsList.sort((a, b) => {
+      const aKey = Object.keys(a)
+      const bKey = Object.keys(b)
+      if (b[bKey[0]] > a[aKey[0]]) {
+        return 1
+      }
+      return -1
+    })
     const recoveredDistrictsList = this.getRecoveredDistrictsList(
       stateData[id].districts,
     )
+    const sortedRecoveredDistrictsList = recoveredDistrictsList.sort((a, b) => {
+      const aKey = Object.keys(a)
+      const bKey = Object.keys(b)
+      if (b[bKey[0]] > a[aKey[0]]) {
+        return 1
+      }
+      return -1
+    })
     const deceasedDistrictsList = this.getDeceasedDistrictsList(
       stateData[id].districts,
     )
+    const sortedDeceasedDistrictsList = deceasedDistrictsList.sort((a, b) => {
+      const aKey = Object.keys(a)
+      const bKey = Object.keys(b)
+      if (b[bKey[0]] > a[aKey[0]]) {
+        return 1
+      }
+      return -1
+    })
     if (stateDataResponse.ok === true && stateTimeLineResponse.ok === true) {
       this.setState({
         pageStatus: stateRouteApiConstants.isSuccess,
         stateName: pageStateName,
+        receivedStateData: stateData[id],
         testedCount: totalTestedCount,
-        confirmedCasesDistrictsList: confirmedDistrictsList,
-        activeCasesDistrictsList: activeDistrictsList,
-        recoveredCasesDistrictList: recoveredDistrictsList,
-        deceasedCasesDistrictsList: deceasedDistrictsList,
+        confirmedCasesDistrictsList: sortedConfirmedDistrictsList,
+        activeCasesDistrictsList: sortedActiveDistrictsList,
+        recoveredCasesDistrictList: sortedRecoveredDistrictsList,
+        deceasedCasesDistrictsList: sortedDeceasedDistrictsList,
         statsList: pageStatsList,
+        confirmedCasesDateList: confirmedDatesList,
+        activeCasesDateList: activeDatesList,
+        recoveredCasesDateList: recoveredDatesList,
+        deceasedCasesDateList: deceasedDatesList,
       })
     } else {
       this.setState({pageStatus: stateRouteApiConstants.isFailure})
@@ -296,34 +510,56 @@ class StateWiseDetailsRoute extends Component {
     const {
       stateName,
       testedCount,
+      receivedStateData,
       defaultSelectedStat,
       confirmedCasesDistrictsList,
       activeCasesDistrictsList,
       recoveredCasesDistrictList,
       deceasedCasesDistrictsList,
+      confirmedCasesDateList,
+      activeCasesDateList,
+      recoveredCasesDateList,
+      deceasedCasesDateList,
       statsList,
     } = this.state
+    let barList = null
+    let barColor = null
+    let barText = null
     let districtsStatsHeadingColor = null
     let districtsStatsList = null
     if (defaultSelectedStat === 'confirmed') {
       districtsStatsHeadingColor = '#FF073A'
       districtsStatsList = confirmedCasesDistrictsList
+      barList = confirmedCasesDateList
+      barColor = '#9A0E31'
+      barText = 'Confirmed'
     } else if (defaultSelectedStat === 'active') {
       districtsStatsHeadingColor = '#3473FA'
+      barList = activeCasesDateList
+      barColor = '#0A4FA0'
+      barText = 'Active'
       districtsStatsList = activeCasesDistrictsList
     } else if (defaultSelectedStat === 'recovered') {
       districtsStatsHeadingColor = '#28a745'
+      barList = recoveredCasesDateList
+      barColor = '#216837'
+      barText = 'Recovered'
       districtsStatsList = recoveredCasesDistrictList
     } else {
       districtsStatsHeadingColor = '#6c757d'
       districtsStatsList = deceasedCasesDistrictsList
+      barList = deceasedCasesDateList
+      barColor = '#474C57'
+      barText = 'Deceased'
     }
+    const lastUpdatedDate = receivedStateData.meta.last_updated
+    const date = new Date(lastUpdatedDate).toDateString()
     return (
       <div className="success-page">
         <div className="success-page-header-card">
           <div className="state-name-card">
             <h1 className="state-name">{stateName[0].state_name}</h1>
-            <p className="data-updated-text">Last update on march 28th 2021.</p>
+            <p className="data-updated-text">Last updated on {date}</p>
           </div>
           <div className="tested-card">
             <p className="tested-card-heading">Tested</p>
@@ -565,6 +801,46 @@ class StateWiseDetailsRoute extends Component {
               )
             })}
           </ul>
+        </div>
+        <div className="bar-container">
+          <BarChart
+            data={barList}
+            width={800}
+            height={500}
+            className="bar"
+            margin={{top: 20, right: 20, bottom: 20, left: 20}}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="transparent" />
+            <XAxis
+              dataKey="date"
+              tick={{
+                stroke: `${barColor}`,
+              }}
+              stroke="transparent"
+            />
+            <YAxis stroke="transparent" />
+            <Tooltip itemStyle={{fontWeight: 'bold'}} />
+            <Bar
+              dataKey="cases_count"
+              name={barText}
+              fill={barColor}
+              barSize="10%"
+              barGap={20}
+              barCategoryGap={20}
+              radius={[10, 10, 0, 0]}
+            >
+              <LabelList
+                dataKey="cases_count"
+                position="top"
+                formatter={this.formatValue}
+                fill={barColor}
+                fontWeight="bold"
+                fontFamily="Roboto"
+                margin={{bottom: 8}}
+                fontSize="16px"
+              />
+            </Bar>
+          </BarChart>
         </div>
       </div>
     )

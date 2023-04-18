@@ -54,7 +54,7 @@
   background-color: #3473fa;
   font-weight: 500;
   cursor: pointer;
-  outline: none;
+  outline: none !important;
   padding: 9px 15px 9px 15px;
 }
 
