@@ -6,8 +6,11 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  Legend,
   CartesianGrid,
   LabelList,
+  LineChart,
+  Line,
 } from 'recharts'
 
 import {v4 as uuidv4} from 'uuid'
@@ -202,6 +205,7 @@ class StateWiseDetailsRoute extends Component {
     activeCasesDateList: [],
     recoveredCasesDateList: [],
     deceasedCasesDateList: [],
+    testedCasesDateList: [],
   }
 
   componentDidMount() {
@@ -311,8 +315,7 @@ class StateWiseDetailsRoute extends Component {
       }
       return -1
     })
-    const slicedArray = sortedDatesList.slice(0, 10)
-    return slicedArray
+    return sortedDatesList
   }
 
   getActiveDatesList = list => {
@@ -338,8 +341,7 @@ class StateWiseDetailsRoute extends Component {
       }
       return -1
     })
-    const slicedArray = sortedDatesList.slice(0, 10)
-    return slicedArray
+    return sortedDatesList
   }
 
   getRecoveredDatesList = list => {
@@ -363,8 +365,7 @@ class StateWiseDetailsRoute extends Component {
       }
       return -1
     })
-    const slicedArray = sortedDatesList.slice(0, 10)
-    return slicedArray
+    return sortedDatesList
   }
 
   getDeceasedDatesList = list => {
@@ -388,8 +389,31 @@ class StateWiseDetailsRoute extends Component {
       }
       return -1
     })
-    const slicedArray = sortedDatesList.slice(0, 10)
-    return slicedArray
+    return sortedDatesList
+  }
+
+  getTestedDatesList = list => {
+    const keys = Object.keys(list)
+    const datesList = keys.map(eachitem => {
+      const date = new Date(eachitem)
+      const month = date.getMonth()
+      const day = date.getDate()
+      const fullDate = day + months[month]
+      const object = {
+        cases_count: list[eachitem].total.tested,
+        date: fullDate,
+      }
+      return object
+    })
+    const sortedDatesList = datesList.sort((a, b) => {
+      const aDate = new Date(a.date)
+      const bDate = new Date(b.date)
+      if (bDate > aDate) {
+        return 1
+      }
+      return -1
+    })
+    return sortedDatesList
   }
 
   formatValue = value => value.toString()
@@ -408,11 +432,14 @@ class StateWiseDetailsRoute extends Component {
     const stateTimeLineResponse = await fetch(timeLineApiUrl, options)
     const stateData = await stateDataResponse.json()
     const stateTimeLineData = await stateTimeLineResponse.json()
+    console.log(stateData)
+    console.log(stateTimeLineData)
     const datesList = stateTimeLineData[id].dates
     const confirmedDatesList = this.getConfirmedDatesList(datesList)
     const activeDatesList = this.getActiveDatesList(datesList)
     const recoveredDatesList = this.getRecoveredDatesList(datesList)
     const deceasedDatesList = this.getDeceasedDatesList(datesList)
+    const testedDatesList = this.getTestedDatesList(datesList)
     const totalTestedCount = stateData[id].total.tested
     const pageStatsList = {
       confirmed: stateData[id].total.confirmed,
@@ -484,6 +511,7 @@ class StateWiseDetailsRoute extends Component {
         activeCasesDateList: activeDatesList,
         recoveredCasesDateList: recoveredDatesList,
         deceasedCasesDateList: deceasedDatesList,
+        testedCasesDateList: testedDatesList,
       })
     } else {
       this.setState({pageStatus: stateRouteApiConstants.isFailure})
@@ -520,6 +548,7 @@ class StateWiseDetailsRoute extends Component {
       activeCasesDateList,
       recoveredCasesDateList,
       deceasedCasesDateList,
+      testedCasesDateList,
       statsList,
     } = this.state
     let barList = null
@@ -530,25 +559,25 @@ class StateWiseDetailsRoute extends Component {
     if (defaultSelectedStat === 'confirmed') {
       districtsStatsHeadingColor = '#FF073A'
       districtsStatsList = confirmedCasesDistrictsList
-      barList = confirmedCasesDateList
+      barList = confirmedCasesDateList.slice(0, 10)
       barColor = '#9A0E31'
       barText = 'Confirmed'
     } else if (defaultSelectedStat === 'active') {
       districtsStatsHeadingColor = '#3473FA'
-      barList = activeCasesDateList
+      barList = activeCasesDateList.slice(0, 10)
       barColor = '#0A4FA0'
       barText = 'Active'
       districtsStatsList = activeCasesDistrictsList
     } else if (defaultSelectedStat === 'recovered') {
       districtsStatsHeadingColor = '#28a745'
-      barList = recoveredCasesDateList
+      barList = recoveredCasesDateList.slice(0, 10)
       barColor = '#216837'
       barText = 'Recovered'
       districtsStatsList = recoveredCasesDistrictList
     } else {
       districtsStatsHeadingColor = '#6c757d'
       districtsStatsList = deceasedCasesDistrictsList
-      barList = deceasedCasesDateList
+      barList = deceasedCasesDateList.slice(0, 10)
       barColor = '#474C57'
       barText = 'Deceased'
     }
@@ -805,7 +834,7 @@ class StateWiseDetailsRoute extends Component {
         <div className="bar-container">
           <BarChart
             data={barList}
-            width={800}
+            width={1000}
             height={500}
             className="bar"
             margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -825,8 +854,8 @@ class StateWiseDetailsRoute extends Component {
               name={barText}
               fill={barColor}
               barSize="10%"
-              barGap={20}
-              barCategoryGap={20}
+              barGap="25%"
+              barCategoryGap="25%"
               radius={[10, 10, 0, 0]}
             >
               <LabelList
@@ -841,6 +870,159 @@ class StateWiseDetailsRoute extends Component {
               />
             </Bar>
           </BarChart>
+        </div>
+        <div className="spread-trends-bg-container">
+          <h1 className="spread-trends-heading">Daily Spread Trends</h1>
+          <div className="confirmed-line-chart-bg-container">
+            <LineChart
+              className="confirmed-line-chart"
+              width={730}
+              height={250}
+              data={confirmedCasesDateList}
+              margin={{top: 5, right: 30, left: 20, bottom: 5}}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="transparent" />
+              <XAxis
+                dataKey="date"
+                tick={{
+                  stroke: '#FF073A',
+                }}
+              />
+              <YAxis
+                tick={{
+                  stroke: '#FF073A',
+                }}
+              />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="cases_count"
+                name="Confirmed"
+                stroke="#FF073A"
+              />
+            </LineChart>
+          </div>
+          <div className="active-line-chart-bg-container">
+            <LineChart
+              className="active-line-chart"
+              width={730}
+              height={250}
+              data={activeCasesDateList}
+              margin={{top: 5, right: 30, left: 20, bottom: 5}}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="transparent" />
+              <XAxis
+                dataKey="date"
+                tick={{
+                  stroke: '#007BFF',
+                }}
+              />
+              <YAxis
+                tick={{
+                  stroke: '#007BFF',
+                }}
+              />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="cases_count"
+                name="Active"
+                stroke="#007BFF"
+              />
+            </LineChart>
+          </div>
+          <div className="recovered-line-chart-bg-container">
+            <LineChart
+              className="recovered-line-chart"
+              width={730}
+              height={250}
+              data={activeCasesDateList}
+              margin={{top: 5, right: 30, left: 20, bottom: 5}}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="transparent" />
+              <XAxis
+                dataKey="date"
+                tick={{
+                  stroke: '#27A243',
+                }}
+              />
+              <YAxis
+                tick={{
+                  stroke: '#27A243',
+                }}
+              />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="cases_count"
+                name="Recovered"
+                stroke="#27A243"
+              />
+            </LineChart>
+          </div>
+          <div className="deceased-line-chart-bg-container">
+            <LineChart
+              className="deceased-line-chart"
+              width={730}
+              height={250}
+              data={deceasedCasesDateList}
+              margin={{top: 5, right: 30, left: 20, bottom: 5}}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="transparent" />
+              <XAxis
+                dataKey="date"
+                tick={{
+                  stroke: '#6C757D',
+                }}
+              />
+              <YAxis
+                tick={{
+                  stroke: '#6C757D',
+                }}
+              />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="cases_count"
+                name="Deceased"
+                stroke="#6C757D"
+              />
+            </LineChart>
+          </div>
+          <div className="tested-line-chart-bg-container">
+            <LineChart
+              className="tested-line-chart"
+              width={730}
+              height={250}
+              data={testedCasesDateList}
+              margin={{top: 5, right: 30, left: 20, bottom: 5}}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="transparent" />
+              <XAxis
+                dataKey="date"
+                tick={{
+                  stroke: '#9673B9',
+                }}
+              />
+              <YAxis
+                tick={{
+                  stroke: '#9673B9',
+                }}
+              />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="cases_count"
+                name="Tested"
+                stroke="#9673B9"
+              />
+            </LineChart>
+          </div>
         </div>
       </div>
     )

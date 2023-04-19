@@ -556,3 +556,156 @@
     font-size: 16px !important;
   }
 }
+
+.spread-trends-bg-container {
+  width: 95%;
+  max-width: 1200px;
+  margin: auot;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.spread-trends-heading {
+  color: #cbd5e1;
+  font-family: 'Roboto';
+  width: 100%;
+  font-size: 23px;
+  text-align: center;
+  margin: 0px 0px 0px 0px;
+  padding: 20px 10px 30px 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .spread-trends-heading {
+    font-size: 28px;
+    text-align: left;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .spread-trends-heading {
+    font-size: 32px;
+  }
+}
+
+.confirmed-line-chart-bg-container {
+  background-color: #331427;
+  margin: 20px 8px 30px 8px;
+  border-radius: 10px;
+  padding: 20px 15px 20px 15px;
+  width: 95%;
+  overflow-x: auto;
+}
+
+.confirmed-line-chart {
+  font-family: 'Roboto' !important;
+  font-weight: lighter !important;
+  color: #ff073a;
+  font-size: 12px;
+  margin: auto;
+}
+
+.active-line-chart-bg-container {
+  background-color: #132240;
+  border-radius: 10px;
+  padding: 20px 15px 20px 15px;
+  margin: 0px 8px 30px 8px;
+  width: 95%;
+  overflow-x: auto;
+}
+
+.active-line-chart {
+  font-family: 'Roboto' !important;
+  font-weight: lighter !important;
+  color: #007bff;
+  font-size: 12px;
+  margin: auto;
+}
+
+.recovered-line-chart-bg-container {
+  background-color: #182829;
+  border-radius: 10px;
+  padding: 20px 15px 20px 15px;
+  margin: 0px 8px 30px 8px;
+  width: 95%;
+  overflow-x: auto;
+}
+
+.recovered-line-chart {
+  font-family: 'Roboto' !important;
+  font-weight: lighter !important;
+  color: #27a243;
+  font-size: 12px;
+  margin: auto;
+}
+
+.deceased-line-chart-bg-container {
+  background-color: #1c1c2b;
+  border-radius: 10px;
+  padding: 20px 15px 20px 15px;
+  margin: 0px 8px 30px 8px;
+  width: 95%;
+  overflow-x: auto;
+}
+
+.deceased-line-chart {
+  font-family: 'Roboto' !important;
+  font-weight: lighter !important;
+  color: #6c757d;
+  font-size: 12px;
+  margin: auto;
+}
+
+.tested-line-chart-bg-container {
+  background-color: #230f41;
+  border-radius: 10px;
+  padding: 20px 15px 20px 15px;
+  margin: 0px 8px 30px 8px;
+  width: 95%;
+  overflow-x: auto;
+}
+
+.tested-line-chart {
+  font-family: 'Roboto' !important;
+  font-weight: lighter !important;
+  color: #9673b9;
+  font-size: 12px;
+  margin: auto;
+}
+
+@media screen and (min-width: 576px) {
+  .confirmed-line-chart {
+    font-size: 14px !important;
+  }
+  .active-line-chart {
+    font-size: 14px !important;
+  }
+  .recovered-line-chart {
+    font-size: 14px !important;
+  }
+  .deceased-line-chart {
+    font-size: 14px !important;
+  }
+  .tested-line-chart {
+    font-size: 14px !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .confirmed-line-chart {
+    font-size: 16px !important;
+  }
+  .active-line-chart {
+    font-size: 16px !important;
+  }
+  .recovered-line-chart {
+    font-size: 16px !important;
+  }
+  .deceased-line-chart {
+    font-size: 16px !important;
+  }
+  .tested-line-chart {
+    font-size: 16px !important;
+  }
+}
