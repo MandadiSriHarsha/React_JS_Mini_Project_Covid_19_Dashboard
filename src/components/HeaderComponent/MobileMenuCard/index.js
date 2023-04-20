@@ -16,25 +16,41 @@ const MobileMenuCard = props => {
   return (
     <div className="mobile-menu-card">
       <div className="mobile-menu-items-card">
-        <Link
-          to="/"
-          className={location === '/' ? 'apply-class' : 'remove-class'}
-        >
-          Home
+        <Link to="/" className="mobile-link">
+          <button
+            className={
+              location === '/'
+                ? 'apply-mobile-button-class'
+                : 'remove-mobile-button-class'
+            }
+            type="button"
+          >
+            Home
+          </button>
         </Link>
-        <Link
-          to="/vaccination"
-          className={
-            location === '/vaccination' ? 'apply-class' : 'remove-class'
-          }
-        >
-          Vaccination
+        <Link to="/vaccination" className="mobile-link">
+          <button
+            className={
+              location === '/vaccination'
+                ? 'apply-mobile-button-class'
+                : 'remove-mobile-button-class'
+            }
+            type="button"
+          >
+            Vaccination
+          </button>
         </Link>
-        <Link
-          to="/about"
-          className={location === '/about' ? 'apply-class' : 'remove-class'}
-        >
-          About
+        <Link to="/about" className="mobile-link">
+          <button
+            className={
+              location === '/about'
+                ? 'apply-mobile-button-class'
+                : 'remove-mobile-button-class'
+            }
+            type="button"
+          >
+            About
+          </button>
         </Link>
       </div>
       <button

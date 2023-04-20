@@ -8,7 +8,7 @@
   background-color: #1e1e30;
   width: 100%;
   margin: 0px 0px 0px 0px;
-  padding: 15px 18px 15px 18px;
+  padding: 20px 25px 20px 25px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -34,7 +34,7 @@
   background: transparent;
   margin: 0px 0px 0px 0px;
   cursor: pointer;
-  outline: none;
+  outline: none !important;
 }
 
 .menu-icon {
@@ -48,7 +48,7 @@
   background-color: #1e1e30;
   width: 100%;
   margin: 0px 0px 0px 0px;
-  padding: 17px 15px 17px 15px;
+  padding: 20px 15px 20px 15px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;

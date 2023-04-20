@@ -4,17 +4,16 @@ import {Link} from 'react-router-dom'
 
 import {v4 as uuidv4} from 'uuid'
 
-import {
-  BsSearch,
-  BsSortDownAlt,
-  BsSortUp,
-  BsArrowRightSquare,
-} from 'react-icons/bs'
+import {BsSearch} from 'react-icons/bs'
+
+import {FcGenericSortingAsc, FcGenericSortingDesc} from 'react-icons/fc'
+
+import {BiChevronRight} from 'react-icons/bi'
 
 import LoaderCard from '../LoaderCard'
 import Header from '../HeaderComponent/Header'
 import Footer from '../Footer'
-import StatsCard from '../StatsCard'
+import HomePageStatsCard from '../HomePageStatsCard'
 
 import './index.css'
 
@@ -215,13 +214,12 @@ class HomeRoute extends Component {
     this.setState({searchValue: event.target.value})
   }
 
-  onChangeSortValue = () => {
-    const {defaultSortValue} = this.state
-    if (defaultSortValue === 'ASC') {
-      this.setState({defaultSortValue: 'DESC'})
-    } else {
-      this.setState({defaultSortValue: 'ASC'})
-    }
+  onChangeSortValueToAsc = () => {
+    this.setState({defaultSortValue: 'ASC'})
+  }
+
+  onChangeSortValueToDesc = () => {
+    this.setState({defaultSortValue: 'DESC'})
   }
 
   renderSuccessPage = () => {
@@ -275,7 +273,7 @@ class HomeRoute extends Component {
         </div>
         {searchValue === '' ? (
           <>
-            <StatsCard homePageList={homePageList} />
+            <HomePageStatsCard homePageList={homePageList} />
             <div className="home-page-table-content-card">
               <div className="home-page-table">
                 <div className="home-page-table-heading-card">
@@ -284,16 +282,18 @@ class HomeRoute extends Component {
                     <button
                       className="sort-button"
                       type="button"
-                      onClick={this.onChangeSortValue}
+                      data-testid="ascendingSort"
+                      onClick={this.onChangeSortValueToAsc}
                     >
-                      <BsSortDownAlt />
+                      <FcGenericSortingAsc />
                     </button>
                     <button
                       className="sort-button"
                       type="button"
-                      onClick={this.onChangeSortValue}
+                      data-testid="descendingSort"
+                      onClick={this.onChangeSortValueToDesc}
                     >
-                      <BsSortUp />
+                      <FcGenericSortingDesc />
                     </button>
                   </div>
                   <p className="header-heading">Confirmed</p>
@@ -302,7 +302,10 @@ class HomeRoute extends Component {
                   <p className="header-heading">Deceased</p>
                   <p className="header-heading">Population</p>
                 </div>
-                <ul className="home-page-list-bg-container">
+                <ul
+                  className="home-page-list-bg-container"
+                  data-testid="stateWiseCovidDataTable"
+                >
                   {sortedList.map(eachitem => {
                     const key = Object.keys(eachitem)
                     return (
@@ -335,7 +338,10 @@ class HomeRoute extends Component {
             </div>
           </>
         ) : (
-          <ul className="search-results-list-bg-container">
+          <ul
+            className="search-results-list-bg-container"
+            data-testid="searchResultsUnorderedList"
+          >
             {searchList.map(eachitem => (
               <Link
                 to={`/state/${eachitem.state_code}`}
@@ -348,7 +354,7 @@ class HomeRoute extends Component {
                     <p className="search-item-box-text">
                       {eachitem.state_code}
                     </p>
-                    <BsArrowRightSquare className="search-item-box-icon" />
+                    <BiChevronRight className="search-item-box-icon" />
                   </div>
                 </li>
               </Link>
@@ -375,7 +381,7 @@ class HomeRoute extends Component {
     const {homePageStatus} = this.state
     switch (homePageStatus) {
       case homePageConstants.isLoading:
-        return <LoaderCard />
+        return <LoaderCard loaderId="homeRouteLoader" />
       case homePageConstants.isSuccess:
         return this.renderSuccessPage()
       case homePageConstants.isFailure:
@@ -387,11 +393,13 @@ class HomeRoute extends Component {
 
   render() {
     return (
-      <div className="home-page-bg-container">
+      <>
         <Header />
-        {this.renderHomePage()}
-        <Footer />
-      </div>
+        <div className="home-page-bg-container">
+          {this.renderHomePage()}
+          <Footer />
+        </div>
+      </>
     )
   }
 }

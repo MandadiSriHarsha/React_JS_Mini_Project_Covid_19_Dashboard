@@ -1,0 +1,44 @@
+.apply-button-class {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Roboto';
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  cursor: pointer;
+  outline: none !important;
+  border: none !important;
+  background: transparent;
+  font-family: 'Roboto';
+}
+
+.remove-button-class {
+  color: #94a3b8 !important;
+  text-decoration: none !important;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: 'Roboto';
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  cursor: pointer;
+  outline: none !important;
+  border: none !important;
+  background: transparent;
+  font-family: 'Roboto';
+}
+
+.desktop-link-item {
+  text-decoration: none !important;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 20px 0px 0px;
+}
+
+@media screen and (min-width: 992px) {
+  .apply-button-class {
+    font-size: 18px;
+  }
+  .remove-button-class {
+    font-size: 18px;
+  }
+}

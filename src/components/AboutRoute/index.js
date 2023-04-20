@@ -59,7 +59,7 @@ class AboutRoute extends Component {
           <h1 className="about-page-heading-2">
             COVID-19 vaccines be ready for distribution
           </h1>
-          <ul className="faqs-list">
+          <ul className="faqs-list" data-testid="faqsUnorderedList">
             {faqsList.map(eachitem => (
               <FAQItem key={eachitem.qno} faqData={eachitem} />
             ))}
@@ -89,7 +89,7 @@ class AboutRoute extends Component {
     const {routeStatus} = this.state
     switch (routeStatus) {
       case aboutRouteConstants.isLoading:
-        return <LoaderCard />
+        return <LoaderCard loaderId="aboutRouteLoader" />
       case aboutRouteConstants.isSuccess:
         return this.renderSuccessPage()
       case aboutRouteConstants.isFailure:

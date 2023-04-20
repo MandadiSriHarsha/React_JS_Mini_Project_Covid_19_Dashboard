@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0px 0px 0px 0px;
 }
 
 .home-page-failure-card {
@@ -42,7 +43,7 @@
 }
 
 .search-input-container {
-  width: 100%;
+  width: 95%;
   max-width: 650px;
   display: flex;
   flex-direction: row;
@@ -59,6 +60,7 @@
   border: 0px solid;
   background: transparent;
   color: #94a3b8;
+  outline: none !important;
 }
 
 .search-icon {
@@ -95,7 +97,7 @@
   border: none;
   cursor: pointer;
   outline: none;
-  caret-color: orange;
+  caret-color: #ffffff;
   background: transparent;
   color: #ffffff;
   font-family: 'Roboto';
@@ -154,7 +156,7 @@
   text-align: left;
   color: #ffffff;
   margin: 0px 0px 0px 0px;
-  padding: 0px 10px 0px 0px;
+  padding: 0px 15px 0px 0px;
 }
 
 @media screen and (min-width: 576px) {
@@ -174,7 +176,7 @@
   background: transparent;
   color: #ffffff;
   cursor: pointer;
-  outline: none;
+  outline: none !important;
   padding: 0px 0px 0px 0px;
   margin: 0px 15px 5px 0px;
 }

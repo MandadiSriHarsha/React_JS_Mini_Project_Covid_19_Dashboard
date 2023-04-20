@@ -2,63 +2,62 @@
   width: 100%;
   background: #161625;
   margin: 0px 0px 0px 0px;
-  padding: 15px 18px 15px 18px;
+  padding: 20px 25px 20px 25px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-.apply-class {
+.mobile-link {
+  text-decoration: none !important;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 20px 0px 0px;
+}
+
+.apply-mobile-button-class {
   color: #ffffff !important;
   text-decoration: none !important;
   font-size: 14px;
   font-weight: 500;
   font-family: 'Roboto';
-  margin: 0px 20px 0px 0px;
+  margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
   cursor: pointer;
-  outline: none;
+  outline: none !important;
+  border: none !important;
+  background: transparent;
 }
 
-.remove-class {
+.remove-mobile-button-class {
   color: #94a3b8 !important;
   text-decoration: none !important;
   font-size: 14px;
   font-weight: 400;
   font-family: 'Roboto';
-  margin: 0px 20px 0px 0px;
+  margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
   cursor: pointer;
-  outline: none;
+  outline: none !important;
+  border: none !important;
+  background: transparent;
 }
 
 @media screen and (min-width: 576px) {
-  .apply-class {
+  .apply-mobile-button-class {
     font-size: 16px;
   }
-  .remove-class {
+  .remove-mobile-button-class {
     font-size: 16px;
   }
 }
 
 @media screen and (min-width: 768px) {
-  .apply-class {
+  .apply-mobile-button-class {
     font-size: 18px;
   }
-  .remove-class {
+  .remove-mobile-button-class {
     font-size: 18px;
-  }
-}
-
-@media screen and (min-width: 992px) {
-  .apply-class {
-    font-size: 18px;
-    margin: 0px 22px 0px 0px;
-  }
-  .remove-class {
-    font-size: 18px;
-    margin: 0px 22px 0px 0px;
   }
 }
 

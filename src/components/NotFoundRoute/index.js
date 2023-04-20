@@ -11,12 +11,11 @@ const NotFoundRoute = props => {
       <img
         src="https://res.cloudinary.com/dqqgljlsw/image/upload/v1681552046/Group_7484Not_Found_Image_uai7vy.png"
         alt="not found"
-        className="not-found-image"
+        className="not-found-pic"
       />
       <h1 className="not-found-heading">PAGE NOT FOUND</h1>
       <p className="not-found-description">
-        we`re sorry, the page you requested could not be found <br /> Please go
-        back to the homepage
+        we are sorry, the page you requested could not be found
       </p>
       <button
         className="not-found-button"

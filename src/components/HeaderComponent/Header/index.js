@@ -24,7 +24,7 @@ class Header extends Component {
         <nav className="mobile-navbar">
           <div className="mobile-navbar-header">
             <Link to="/" className="mobile-navbar-header-heading">
-              COVID19<span className="mobile-navbar-span">INDIA</span>
+              COVID19INDIA
             </Link>
             <button
               type="button"
@@ -62,7 +62,7 @@ class Header extends Component {
         </nav>
         <nav className="desktop-navbar">
           <Link to="/" className="desktop-navbar-header-heading">
-            COVID19<span className="desktop-navbar-span">INDIA</span>
+            COVID19INDIA
           </Link>
           <DesktopMenuCard />
         </nav>
