@@ -1,5 +1,7 @@
 import {Component} from 'react'
 
+import Loader from 'react-loader-spinner'
+
 import {Link} from 'react-router-dom'
 
 import {v4 as uuidv4} from 'uuid'
@@ -10,10 +12,11 @@ import {FcGenericSortingAsc, FcGenericSortingDesc} from 'react-icons/fc'
 
 import {BiChevronRight} from 'react-icons/bi'
 
-import LoaderCard from '../LoaderCard'
 import Header from '../HeaderComponent/Header'
 import Footer from '../Footer'
 import HomePageStatsCard from '../HomePageStatsCard'
+
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 
 import './index.css'
 
@@ -280,17 +283,17 @@ class HomeRoute extends Component {
                   <div className="sort-card">
                     <p className="sort-heading">States/UT</p>
                     <button
+                      testid="ascendingSort"
                       className="sort-button"
                       type="button"
-                      data-testid="ascendingSort"
                       onClick={this.onChangeSortValueToAsc}
                     >
                       <FcGenericSortingAsc />
                     </button>
                     <button
+                      testid="descendingSort"
                       className="sort-button"
                       type="button"
-                      data-testid="descendingSort"
                       onClick={this.onChangeSortValueToDesc}
                     >
                       <FcGenericSortingDesc />
@@ -303,8 +306,8 @@ class HomeRoute extends Component {
                   <p className="header-heading">Population</p>
                 </div>
                 <ul
+                  testid="stateWiseCovidDataTable"
                   className="home-page-list-bg-container"
-                  data-testid="stateWiseCovidDataTable"
                 >
                   {sortedList.map(eachitem => {
                     const key = Object.keys(eachitem)
@@ -339,8 +342,8 @@ class HomeRoute extends Component {
           </>
         ) : (
           <ul
+            testid="searchResultsUnorderedList"
             className="search-results-list-bg-container"
-            data-testid="searchResultsUnorderedList"
           >
             {searchList.map(eachitem => (
               <Link
@@ -377,11 +380,17 @@ class HomeRoute extends Component {
     </div>
   )
 
+  renderHomePageLoadingView = () => (
+    <div testid="homeRouteLoader" className="loader-bg-container">
+      <Loader type="TailSpin" color="#007BFF" height={60} width={60} />
+    </div>
+  )
+
   renderHomePage = () => {
     const {homePageStatus} = this.state
     switch (homePageStatus) {
       case homePageConstants.isLoading:
-        return <LoaderCard loaderId="homeRouteLoader" />
+        return this.renderHomePageLoadingView()
       case homePageConstants.isSuccess:
         return this.renderSuccessPage()
       case homePageConstants.isFailure:

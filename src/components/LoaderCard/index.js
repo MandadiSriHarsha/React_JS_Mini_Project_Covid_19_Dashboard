@@ -7,7 +7,7 @@ import './index.css'
 const LoaderCard = props => {
   const {loaderId} = props
   return (
-    <div className="loader-bg-container" data-testid={loaderId}>
+    <div testid={loaderId} className="loader-bg-container">
       <Loader type="TailSpin" color="#007BFF" height={60} width={60} />
     </div>
   )

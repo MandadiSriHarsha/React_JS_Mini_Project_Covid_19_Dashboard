@@ -31,7 +31,7 @@ const HomePageStatsCard = props => {
   const activeCasesCount = activeCasesList.reduce((a, b) => a + b)
   return (
     <ul className="home-page-stats-bg-container">
-      <li className="stats-card" data-testid="countryWideConfirmedCases">
+      <li testid="countryWideConfirmedCases" className="stats-card">
         <p className="confirmed-stat-heading">Confirmed</p>
         <img
           src="https://res.cloudinary.com/dqqgljlsw/image/upload/v1681976674/check-mark_1_tsacex.png"
@@ -40,7 +40,7 @@ const HomePageStatsCard = props => {
         />
         <h1 className="confirmed-stat-count">{confirmedCasesCount}</h1>
       </li>
-      <li className="stats-card" data-testid="countryWideActiveCases">
+      <li testid="countryWideActiveCases" className="stats-card">
         <p className="active-stat-heading">Active</p>
         <img
           src="https://res.cloudinary.com/dqqgljlsw/image/upload/v1681976689/protection_1_duqlqf.png"
@@ -49,7 +49,7 @@ const HomePageStatsCard = props => {
         />
         <h1 className="active-stat-count">{activeCasesCount}</h1>
       </li>
-      <li className="stats-card" data-testid="countryWideRecoveredCases">
+      <li testid="countryWideRecoveredCases" className="stats-card">
         <p className="recovered-stat-heading">Recovered</p>
         <img
           src="https://res.cloudinary.com/dqqgljlsw/image/upload/v1681976669/recovered_1_mbu2b3.png"
@@ -58,7 +58,7 @@ const HomePageStatsCard = props => {
         />
         <h1 className="recovered-stat-count">{recoveredCasesCount}</h1>
       </li>
-      <li className="stats-card" data-testid="countryWideDeceasedCases">
+      <li testid="countryWideDeceasedCases" className="stats-card">
         <p className="deceased-stat-heading">Deceased</p>
         <img
           src="https://res.cloudinary.com/dqqgljlsw/image/upload/v1681976681/breathing_1_xxvxsj.png"

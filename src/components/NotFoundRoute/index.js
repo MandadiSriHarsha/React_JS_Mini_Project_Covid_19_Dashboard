@@ -10,8 +10,8 @@ const NotFoundRoute = props => {
     <div className="not-found-bg-container">
       <img
         src="https://res.cloudinary.com/dqqgljlsw/image/upload/v1681552046/Group_7484Not_Found_Image_uai7vy.png"
-        alt="not found"
-        className="not-found-pic"
+        alt="not-found-pic"
+        className="not-found-image"
       />
       <h1 className="not-found-heading">PAGE NOT FOUND</h1>
       <p className="not-found-description">

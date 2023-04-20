@@ -597,8 +597,8 @@ class StateWiseDetailsRoute extends Component {
         </div>
         <div className="success-page-stats-card">
           <button
+            testid="stateSpecificConfirmedCasesContainer"
             type="button"
-            data-testid="stateSpecificConfirmedCasesContainer"
             className={`confirmed-stats-button ${
               defaultSelectedStat === 'confirmed' ? 'apply-confirmed-style' : ''
             }`}
@@ -615,8 +615,8 @@ class StateWiseDetailsRoute extends Component {
             </h1>
           </button>
           <button
+            testid="stateSpecificActiveCasesContainer"
             type="button"
-            data-testid="stateSpecificActiveCasesContainer"
             className={`active-stats-button ${
               defaultSelectedStat === 'active' ? 'apply-active-style' : ''
             }`}
@@ -633,8 +633,8 @@ class StateWiseDetailsRoute extends Component {
             </h1>
           </button>
           <button
+            testid="stateSpecificRecoveredCasesContainer"
             type="button"
-            data-testid="stateSpecificRecoveredCasesContainer"
             className={`recovered-stats-button ${
               defaultSelectedStat === 'recovered' ? 'apply-recovered-style' : ''
             }`}
@@ -651,8 +651,8 @@ class StateWiseDetailsRoute extends Component {
             </h1>
           </button>
           <button
+            testid="stateSpecificDeceasedCasesContainer"
             type="button"
-            data-testid="stateSpecificDeceasedCasesContainer"
             className={`deceased-stats-button ${
               defaultSelectedStat === 'deceased' ? 'apply-deceased-style' : ''
             }`}
@@ -734,8 +734,8 @@ class StateWiseDetailsRoute extends Component {
           </BarChart>
         </div>
         <div
+          testid="lineChartsContainer"
           className="spread-trends-bg-container"
-          data-testid="lineChartsContainer"
         >
           <h1 className="spread-trends-heading">Daily Spread Trends</h1>
           <div className="confirmed-line-chart-bg-container">
